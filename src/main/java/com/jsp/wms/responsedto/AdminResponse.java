@@ -18,5 +18,4 @@ public class AdminResponse {
 	private int adminId;
 	private String name;
 	private String email;
-	private AdminType adminType;
 }

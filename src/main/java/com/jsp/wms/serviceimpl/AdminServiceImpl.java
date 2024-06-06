@@ -39,7 +39,8 @@ public class AdminServiceImpl implements AdminService {
 		}
 		else {
 Admin admin = adminRepository.save(adminMapper.mapToAdmin(adminRequest, new Admin()));					
-		
+		admin.setAdminType(AdminType.SUPER_ADMIN);
+		admin=adminRepository.save(admin);
 			return	ResponseEntity.status(HttpStatus.CREATED)
 				.body(new ResponseStructure<AdminResponse>()
 				.setStatus(HttpStatus.CREATED.value())

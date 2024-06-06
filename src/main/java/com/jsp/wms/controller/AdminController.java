@@ -20,7 +20,7 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
-	@PostMapping("/admins")  //among admins
+	@PostMapping("/register")  //among admins
 	public ResponseEntity<ResponseStructure<AdminResponse>>createSuperAdmin(@RequestBody AdminRequest admin){
 		return adminService.createSuperAdmin(admin);
 	}
