@@ -2,6 +2,7 @@ package com.jsp.wms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +17,14 @@ import com.jsp.wms.util.ResponseStructure;
 @RequestMapping("/api/v1")
 public class WareHouseController {
 
-	@Autowired
+//	@Autowired
 	private WareHouseService wareHouseService;
 	
 	
-	@PostMapping("/warehouses")
-public String	createWareHouse(@RequestBody WareHouseRequest wareHouseRequest)
+	@GetMapping("/warehouses")
+public String	createWareHouse()
 {
-		return  "Warehouse created";
+		return  "Warehouse Found";
 	
 }
 }
