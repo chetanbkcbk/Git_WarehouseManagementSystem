@@ -1,6 +1,7 @@
 package com.jsp.wms.serviceimpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,52 +10,99 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.jsp.wms.entity.Admin;
+import com.jsp.wms.entity.WareHouse;
 import com.jsp.wms.enums.AdminType;
 import com.jsp.wms.enums.Privileges;
 import com.jsp.wms.mapper.AdminMapper;
 import com.jsp.wms.repository.AdminRepository;
+import com.jsp.wms.repository.WareHouseRepository;
 import com.jsp.wms.requestdto.AdminRequest;
 import com.jsp.wms.responsedto.AdminResponse;
 import com.jsp.wms.service.AdminService;
 import  com.jsp.wms.exception.IllegalOperationException;
+import com.jsp.wms.exception.WarehouseNotFoundByIdException;
 import com.jsp.wms.util.ResponseStructure;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 
-	
+
 	@Autowired
 	private AdminRepository adminRepository;
-	
+
 	@Autowired
 	private AdminMapper adminMapper;
+
+	@Autowired
+	private WareHouseRepository wareHouseRepository;
 
 	@Override
 	public ResponseEntity<ResponseStructure<AdminResponse>> createSuperAdmin(AdminRequest adminRequest) {
 		if( adminRepository.existsByAdminType(AdminType.SUPER_ADMIN))
 		{
-		//since no need to find SuperAdmin ,use existsBy() which returms boolean 
-		
+			//since no need to find SuperAdmin ,use existsBy() which returms boolean 
+
 			throw new IllegalOperationException("The SuperAdmin Already Exists,cannot add another SuperAdmin");
 		}
 		else {
-Admin admin = adminRepository.save(adminMapper.mapToAdmin(adminRequest, new Admin()));					
-		admin.setAdminType(AdminType.SUPER_ADMIN);
-		admin=adminRepository.save(admin);
+			Admin admin = adminRepository.save(adminMapper.mapToAdmin(adminRequest, new Admin()));					
+			admin.setAdminType(AdminType.SUPER_ADMIN);
+			admin=adminRepository.save(admin);
 			return	ResponseEntity.status(HttpStatus.CREATED)
-				.body(new ResponseStructure<AdminResponse>()
-				.setStatus(HttpStatus.CREATED.value())
-				.setMessage("Super Admin Created")
-				.setData(adminMapper.mapToAdminResponse(admin)));
+					.body(new ResponseStructure<AdminResponse>()
+							.setStatus(HttpStatus.CREATED.value())
+							.setMessage("Super Admin Created")
+							.setData(adminMapper.mapToAdminResponse(admin)));
 		}
-	
+
 	}
 
 
-	public ResponseEntity<ResponseStructure<AdminResponse>> createAdmin(AdminRequest adminRequest) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public ResponseEntity<ResponseStructure<AdminResponse>> createAdmin(AdminRequest adminRequest,int wareHouseId) {
+/*
+		Optional<WareHouse> optionalWarehouse = wareHouseRepository.findById(wareHouseId);
 
+		if(optionalWarehouse.isPresent())
+		{
+			Admin admin = adminMapper.mapToAdmin(adminRequest, new Admin());
+			admin.setAdminType(AdminType.ADMIN);
+			admin=adminRepository.save(admin);
+
+
+
+			WareHouse warehouse = optionalWarehouse.get();
+			warehouse.setAdmin(admin);
+
+			return	ResponseEntity.status(HttpStatus.CREATED)
+					.body(new ResponseStructure<AdminResponse>()
+							.setStatus(HttpStatus.CREATED.value())
+							.setMessage("AdminCreated")
+							.setData(adminMapper.mapToAdminResponse(admin)));
+		}
+		else
+		{
+			throw new WarehouseNotFoundByIdException("Warehouse with such an ID does NOT Exist");	
+		}
+*/
+//10th june task
+	return	wareHouseRepository.findById(wareHouseId)
+		.map(warehouse->{
+				
+		
+			Admin admin = adminMapper.mapToAdmin(adminRequest, new Admin());
+			admin.setAdminType(AdminType.ADMIN);
+			admin=adminRepository.save(admin);
+
+			warehouse.setAdmin(admin);
+wareHouseRepository.save(warehouse);
+			
+			return	ResponseEntity.status(HttpStatus.CREATED)
+					.body(new ResponseStructure<AdminResponse>()
+							.setStatus(HttpStatus.CREATED.value())
+							.setMessage("AdminCreated")
+							.setData(adminMapper.mapToAdminResponse(admin)));	
+		}).orElseThrow(()->new WarehouseNotFoundByIdException("WareHouse of this id not found")	 );
 	
+
+	}
 }

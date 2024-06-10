@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.jsp.wms.exception.IllegalOperationException;
+import com.jsp.wms.exception.WarehouseNotFoundByIdException;
 
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
@@ -68,10 +69,19 @@ Map<String,String> allErrors = new HashMap<>();
 						
 	}
 	
+	@ExceptionHandler
 public ResponseEntity<ErrorStructure> handleUsernameNotFound(UsernameNotFoundException ex)
 															//is apredefined exception 
 {
 	return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Username Not Found in the Database");
 }
+	
+	@ExceptionHandler
+	public ResponseEntity<ErrorStructure> handleWarehouseNotFoundById(WarehouseNotFoundByIdException ex)
+	//is a custom exception 
+{
+return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Warehouse Not Found in the Database");
+}
+	
 	
 }
