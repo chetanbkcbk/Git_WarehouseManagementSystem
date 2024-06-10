@@ -50,5 +50,11 @@ Admin admin = adminRepository.save(adminMapper.mapToAdmin(adminRequest, new Admi
 	
 	}
 
+
+	public ResponseEntity<ResponseStructure<AdminResponse>> createAdmin(AdminRequest adminRequest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

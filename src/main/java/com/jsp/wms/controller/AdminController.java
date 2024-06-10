@@ -20,8 +20,13 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
-	@PostMapping("/register")  //among admins
+	@PostMapping("/register")  //to create SuperAdmin the url shud be register
 	public ResponseEntity<ResponseStructure<AdminResponse>>createSuperAdmin(@RequestBody AdminRequest admin){
 		return adminService.createSuperAdmin(admin);
+	}
+	
+	@PostMapping("/admins")
+	public ResponseEntity<ResponseStructure<AdminResponse>>	createAdmins(@RequestBody AdminRequest admin){
+	return adminService.createAdmins(admin)
 	}
 }
