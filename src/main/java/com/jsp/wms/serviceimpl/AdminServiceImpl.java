@@ -21,6 +21,7 @@ import com.jsp.wms.requestdto.AdminRequest;
 import com.jsp.wms.responsedto.AdminResponse;
 import com.jsp.wms.service.AdminService;
 import com.jsp.wms.exception.AdminNotFoundByEmailException;
+import com.jsp.wms.exception.AdminNotFoundByIdException;
 import  com.jsp.wms.exception.IllegalOperationException;
 import com.jsp.wms.exception.WarehouseNotFoundByIdException;
 import com.jsp.wms.util.ResponseStructure;
@@ -129,5 +130,25 @@ public class AdminServiceImpl implements AdminService {
 	}).orElseThrow(	()->new AdminNotFoundByEmailException("Admin with such email not found") );
 
 		}
+
+
+	@Override
+	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdminBySuperAdmin(AdminRequest adminRequest,
+			int adminId) {
+
+		return adminRepository.findById(adminId).map(exadmin->
+		 {
+			 exadmin=adminMapper.mapToAdmin(adminRequest, exadmin);
+			 
+			Admin updatedAdminBySuperAdmin =adminRepository.save(exadmin);
+		
+			return	ResponseEntity.status(HttpStatus.OK)
+					.body(new ResponseStructure<AdminResponse>()
+							.setStatus(HttpStatus.OK.value())
+							.setMessage("Admin Updated ")
+							.setData(adminMapper.mapToAdminResponse(updatedAdminBySuperAdmin)));	
+		}).orElseThrow(	()->new AdminNotFoundByIdException("Admin with such Id not found") );		
+		
+	}
 
 }
