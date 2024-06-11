@@ -1,6 +1,16 @@
 package com.jsp.wms.service;
 
+import org.springframework.http.ResponseEntity;
+
+import com.jsp.wms.entity.WareHouse;
+import com.jsp.wms.responsedto.WareHouseResponse;
+import com.jsp.wms.util.ResponseStructure;
+
+
 public interface WareHouseService {
+
+
+	ResponseEntity<ResponseStructure<WareHouseResponse>> createWarehouse(WareHouse wareHouseRequest);
 
 	
 }
