@@ -22,8 +22,10 @@ public class WareHouseMapper {
 					.build();
 		}
 
-		public WareHouse mapToWareHouse(WareHouse wareHouseRequest, WareHouse wareHouse) {
+		public WareHouse mapToWareHouse(WareHouseRequest wareHouseRequest, WareHouse wareHouse) {
 			wareHouse.setName(wareHouseRequest.getName());
 			return wareHouse;			
-		}	
+		}
+
+			
 }

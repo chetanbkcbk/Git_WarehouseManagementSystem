@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.jsp.wms.entity.Admin;
 import com.jsp.wms.entity.WareHouse;
 import com.jsp.wms.enums.AdminType;
+import com.jsp.wms.exception.WarehouseNotFoundByIdException;
 import com.jsp.wms.mapper.WareHouseMapper;
 import com.jsp.wms.repository.AdminRepository;
 import com.jsp.wms.repository.WareHouseRepository;
@@ -30,7 +31,7 @@ public class WareHouseServiceImpl implements WareHouseService{
 	
 
 	@Override
-	public ResponseEntity<ResponseStructure<WareHouseResponse>> createWarehouse(WareHouse wareHouseRequest) {
+	public ResponseEntity<ResponseStructure<WareHouseResponse>> createWarehouse(WareHouseRequest wareHouseRequest) {
 
 		
 		WareHouse warehouse= wareHouseRepository.save(wareHouseMapper.mapToWareHouse(wareHouseRequest,new WareHouse()));
@@ -46,4 +47,25 @@ public class WareHouseServiceImpl implements WareHouseService{
 
 
 
-}
+	@Override
+	public ResponseEntity<ResponseStructure<WareHouseResponse>> updateWarehouse(WareHouseRequest wareHouseRequest,
+			int wareHouseId) {
+
+		return	wareHouseRepository.findById(wareHouseId).map(exWareHouse->
+		{
+			exWareHouse=wareHouseMapper.mapToWareHouse(wareHouseRequest, exWareHouse);
+			
+			WareHouse updatedWarehouse = wareHouseRepository.save(exWareHouse);
+			
+		return ResponseEntity.status(HttpStatus.OK)	
+				.body(new ResponseStructure<WareHouseResponse>()
+						.setStatus(HttpStatus.OK.value())
+						.setMessage("Warehouse Updated")
+						.setData(wareHouseMapper.mapToWareHouseResponse(updatedWarehouse)));
+		}).orElseThrow(()->new WarehouseNotFoundByIdException("WareHouse Not Found By Id"));
+	}
+
+
+
+	}
+

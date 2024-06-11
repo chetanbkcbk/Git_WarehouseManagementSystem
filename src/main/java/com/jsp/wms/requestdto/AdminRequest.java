@@ -37,7 +37,5 @@ public class AdminRequest {
 			message = "Password must contain at least one letter, one number, one special character, and be at least 8 characters long")
 	private String password ;
 	
-	private AdminType adminType;
-	
 	
 }

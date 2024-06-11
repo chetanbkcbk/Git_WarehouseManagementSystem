@@ -13,13 +13,14 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.jsp.wms.exception.AdminNotFoundByEmailException;
 import com.jsp.wms.exception.IllegalOperationException;
 import com.jsp.wms.exception.WarehouseNotFoundByIdException;
 
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
 
-	public ResponseEntity<ErrorStructure> errorResponse(HttpStatus status,String message,String rootCause)
+	public ResponseEntity <ErrorStructure> errorResponse(HttpStatus status,String message,String rootCause)
 	{
 		
 		return ResponseEntity
@@ -71,7 +72,7 @@ Map<String,String> allErrors = new HashMap<>();
 	
 	@ExceptionHandler
 public ResponseEntity<ErrorStructure> handleUsernameNotFound(UsernameNotFoundException ex)
-															//is apredefined exception 
+															//is a predefined exception 
 {
 	return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Username Not Found in the Database");
 }
@@ -83,5 +84,11 @@ public ResponseEntity<ErrorStructure> handleUsernameNotFound(UsernameNotFoundExc
 return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Warehouse Not Found in the Database");
 }
 	
+	@ExceptionHandler
+	public ResponseEntity<ErrorStructure> handleAdminNotFoundByEmail(AdminNotFoundByEmailException ex)
+	//is a custom exception 
+{
+return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Admin with such email Not Found in the Database");
+}
 	
 }
