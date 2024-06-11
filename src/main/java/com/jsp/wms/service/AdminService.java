@@ -17,4 +17,7 @@ public ResponseEntity<ResponseStructure<AdminResponse>> createSuperAdmin(AdminRe
 public ResponseEntity<ResponseStructure<AdminResponse>> createAdmin(AdminRequest adminRequest,int wareHouseId);
 
 public ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin( AdminRequest adminRequest);
+
+public ResponseEntity<ResponseStructure<AdminResponse>> updateAdminBySuperAdmin( AdminRequest adminRequest,
+		int adminId);
 }

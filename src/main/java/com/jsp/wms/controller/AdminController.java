@@ -41,4 +41,10 @@ public class AdminController {
 		return adminService.updateAdmin(adminRequest);
 	}
 	
+	@PutMapping("/admins/{adminId}")
+	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdminBySuperAdmin(@RequestBody @ Valid AdminRequest adminRequest,@PathVariable int adminId)
+	{
+		return adminService.updateAdminBySuperAdmin(adminRequest,adminId);
+		
+	}
 }

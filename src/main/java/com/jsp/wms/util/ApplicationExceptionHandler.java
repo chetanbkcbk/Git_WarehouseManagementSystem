@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.jsp.wms.exception.AdminNotFoundByEmailException;
+import com.jsp.wms.exception.AdminNotFoundByIdException;
 import com.jsp.wms.exception.IllegalOperationException;
 import com.jsp.wms.exception.WarehouseNotFoundByIdException;
 
@@ -90,5 +91,11 @@ return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Warehouse Not Found
 {
 return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Admin with such email Not Found in the Database");
 }
-	
+
+	@ExceptionHandler
+	public ResponseEntity<ErrorStructure> handleAdminNotFoundById(AdminNotFoundByIdException ex)
+	//is a custom exception 
+{
+return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Admin with such ID Not Found in the Database");
+}
 }
