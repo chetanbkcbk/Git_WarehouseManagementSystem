@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,4 +33,12 @@ public class AdminController {
 	public ResponseEntity<ResponseStructure<AdminResponse>>	createAdmin(@RequestBody @Valid AdminRequest adminRequest,@PathVariable int wareHouseId){
 	return  adminService.createAdmin(adminRequest,wareHouseId);
 	}
+	
+	@PutMapping("/admins")
+	//no need of taking id(unique) from postman to fetch in order to update,coz unique data ie(email) can be fetched from authentication object of security context of security context  holder in  admin service impln class
+
+	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin(@RequestBody @Valid AdminRequest adminRequest) {
+		return adminService.updateAdmin(adminRequest);
+	}
+	
 }

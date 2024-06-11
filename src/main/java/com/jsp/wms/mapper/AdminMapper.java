@@ -18,7 +18,6 @@ public Admin mapToAdmin(AdminRequest adminRequest,Admin admin) {
 	admin.setName(adminRequest.getName());
 	admin.setEmail(adminRequest.getEmail());
 	admin.setPassword(passwordEncoder.encode(adminRequest.getPassword()));//used to encrpt the password into the database or else we get Invalid User credentials
-	admin.setAdminType(adminRequest.getAdminType());
 		return admin;
 	}
 	

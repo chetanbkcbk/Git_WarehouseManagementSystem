@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.jsp.wms.entity.Admin;
@@ -19,6 +20,7 @@ import com.jsp.wms.repository.WareHouseRepository;
 import com.jsp.wms.requestdto.AdminRequest;
 import com.jsp.wms.responsedto.AdminResponse;
 import com.jsp.wms.service.AdminService;
+import com.jsp.wms.exception.AdminNotFoundByEmailException;
 import  com.jsp.wms.exception.IllegalOperationException;
 import com.jsp.wms.exception.WarehouseNotFoundByIdException;
 import com.jsp.wms.util.ResponseStructure;
@@ -106,4 +108,26 @@ public class AdminServiceImpl implements AdminService {
 	
 
 	}
+
+
+	@Override
+	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin(AdminRequest adminRequest) {
+	//no need of taking id(unique) from postman to fetch in order to update,coz unique data ie(email) can be fetched from authentication object of security context of security context  holder
+		String email = SecurityContextHolder.getContext().getAuthentication().getName(); //will retrun string
+		
+	return	adminRepository.findByEmail(email).map(exadmin->
+		{
+		exadmin=adminMapper.mapToAdmin(adminRequest, exadmin);
+		
+		Admin updatedAdmin = adminRepository.save(exadmin);
+		
+		return	ResponseEntity.status(HttpStatus.OK)
+				.body(new ResponseStructure<AdminResponse>()
+						.setStatus(HttpStatus.OK.value())
+						.setMessage("Admin Updated")
+						.setData(adminMapper.mapToAdminResponse(updatedAdmin)));	
+	}).orElseThrow(	()->new AdminNotFoundByEmailException("Admin with such email not found") );
+
+		}
+
 }
