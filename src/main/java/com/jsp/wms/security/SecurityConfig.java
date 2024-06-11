@@ -25,12 +25,12 @@ aim 1)encode password before db
 spring which type of algorithm i have used hence use @ Bean   */
 	}
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity.csrf(csrf->csrf.disable())
+	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception { //will help reset whole configuratn
+		return httpSecurity.csrf(csrf->csrf.disable()) //coz we are not working with csrf certificatn
 				//httpSecurity ref, will help build security builder chain 
 				//@Bean over the method
 				.authorizeHttpRequests(authorize->authorize.requestMatchers("/api/v1/register") //requestMatchers to configure the url endpoint ie.private or public)
-									//authorize is ref name
+									//authorize is ref name   		'regiter' endpointis public coz	without registering how can superadmin login
 						.permitAll()// ,to permit all users who try to hit that particular url hence make it public and permit to all
 						.anyRequest() //if any other request comes ,it must be authenticated
 						.authenticated()
