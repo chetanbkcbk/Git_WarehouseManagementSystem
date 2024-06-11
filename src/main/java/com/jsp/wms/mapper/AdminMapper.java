@@ -11,7 +11,7 @@ import com.jsp.wms.responsedto.AdminResponse;
 public class AdminMapper {
 
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder;  //autowire the PasswordEncoder and using it invoke its method
 	
 public Admin mapToAdmin(AdminRequest adminRequest,Admin admin) {
 		
