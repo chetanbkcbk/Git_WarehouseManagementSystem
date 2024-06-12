@@ -38,4 +38,10 @@ public ResponseEntity<ResponseStructure<WareHouseResponse>>	createWareHouse(@Req
 	public ResponseEntity<ResponseStructure<WareHouseResponse>> updateWarehouse(@RequestBody WareHouseRequest warehouseRequest, @PathVariable int warehouseId){
 		return wareHouseService.updateWarehouse(warehouseRequest , warehouseId);
 	}
+	
+	@PreAuthorize("hasAuthority('READ')")
+	@GetMapping("/warehouses/{wareHouseId}")
+	public ResponseEntity<ResponseStructure<WareHouseResponse>> findWareHouse( @PathVariable int wareHouseId){
+		return wareHouseService.findWareHouse( wareHouseId);
+	}
 }

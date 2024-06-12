@@ -1,7 +1,10 @@
 package com.jsp.wms.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,6 +48,20 @@ public class AdminController {
 	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdminBySuperAdmin(@RequestBody @ Valid AdminRequest adminRequest,@PathVariable int adminId)
 	{
 		return adminService.updateAdminBySuperAdmin(adminRequest,adminId);
+		
+	}
+	
+	@GetMapping("/admins/{adminId}")
+	public ResponseEntity<ResponseStructure<AdminResponse>> findAdmin(@PathVariable int adminId)
+	{
+		return adminService.findAdmin(adminId);
+		
+	}
+	
+	@GetMapping("/admins")
+	public ResponseEntity<ResponseStructure<List<AdminResponse>>> findAdmins()
+	{
+		return adminService.findAdmins();
 		
 	}
 }
