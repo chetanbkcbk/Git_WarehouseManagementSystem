@@ -1,5 +1,8 @@
 package com.jsp.wms.requestdto;
 
+import com.jsp.wms.entity.Admin;
+
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,4 +22,5 @@ public class WareHouseRequest {
 	@NotBlank(message="username cannot be blank")
 	private String name; 
 
+	
 }

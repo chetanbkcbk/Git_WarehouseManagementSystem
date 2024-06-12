@@ -1,11 +1,14 @@
 package com.jsp.wms.entity;
 
+import org.springframework.context.annotation.Bean;
+
 import com.jsp.wms.enums.AdminType;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,4 +29,7 @@ public class WareHouse {
 	private int wareHouseId;
 	
 	private String name; 
+	
+	@OneToOne 
+	private Admin admin;
 }

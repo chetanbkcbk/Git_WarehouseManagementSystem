@@ -13,6 +13,7 @@ import lombok.Setter;
 @Builder
 public class WareHouseResponse {
 
+	private int wareHouseId;
 	private String name; 
-
+	private int totalCapacity;
 }

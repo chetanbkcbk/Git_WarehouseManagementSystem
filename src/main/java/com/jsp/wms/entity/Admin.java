@@ -33,9 +33,6 @@ public class Admin {
 	private String password ;
 	
 	@Enumerated(EnumType.STRING)
+    AdminType adminType;
 
-	private AdminType adminType;
-
-	
-	
 }

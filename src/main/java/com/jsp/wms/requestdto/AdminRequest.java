@@ -33,11 +33,9 @@ public class AdminRequest {
 	
 	private String email;
 	
-	@Pattern(regexp = "^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=])(?=\\S+$).{8,}$",
-            message = "Password must be alpha-numeric, contain at least 1 capital letter, lowercase letter, special character, and numeric character. It must be at least 8 characters in length.")
+	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", 
+			message = "Password must contain at least one letter, one number, one special character, and be at least 8 characters long")
 	private String password ;
-	
-	private AdminType adminType;
 	
 	
 }
