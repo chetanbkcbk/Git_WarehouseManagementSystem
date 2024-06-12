@@ -92,9 +92,9 @@ public class AdminServiceImpl implements AdminService {
 		.map(warehouse->{
 				
 		
-			Admin admin = adminMapper.mapToAdmin(adminRequest, new Admin());
-			admin.setAdminType(AdminType.ADMIN);
-			admin=adminRepository.save(admin);
+			Admin admin = adminMapper.mapToAdmin(adminRequest, new Admin()); //returns admin object
+			admin.setAdminType(AdminType.ADMIN); //into admin we are setting 
+			admin=adminRepository.save(admin); //and saving it into repository
 
 			warehouse.setAdmin(admin);
             wareHouseRepository.save(warehouse);

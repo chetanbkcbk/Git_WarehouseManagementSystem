@@ -21,11 +21,11 @@ public Admin mapToAdmin(AdminRequest adminRequest,Admin admin) {
 		return admin;
 	}
 	
-	public AdminResponse mapToAdminResponse(Admin admin) {
+	public AdminResponse mapToAdminResponse(Admin admin) { 
 		return AdminResponse.builder()
 				.adminId(admin.getAdminId())
 				.name(admin.getName())
-				.email(admin.getEmail())	
+				.email(admin.getEmail())
 				.build();
 	}	
 }

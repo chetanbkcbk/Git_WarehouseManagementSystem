@@ -32,4 +32,6 @@ public class WareHouse {
 	
 	@OneToOne 
 	private Admin admin;
+	
+	
 }

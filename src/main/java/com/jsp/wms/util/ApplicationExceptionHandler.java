@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.jsp.wms.exception.AddressNotFoundByIdException;
 import com.jsp.wms.exception.AdminNotFoundByEmailException;
 import com.jsp.wms.exception.AdminNotFoundByIdException;
 import com.jsp.wms.exception.IllegalOperationException;
@@ -98,4 +99,16 @@ return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Admin with such ema
 {
 return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Admin with such ID Not Found in the Database");
 }
+	
+	@ExceptionHandler
+	public ResponseEntity<ErrorStructure> handleAddressNotFoundById(AddressNotFoundByIdException ex)
+	//is a custom exception 
+{
+return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Address with such ID Not Found in the Database");
+}
+	
+	
+	
+	
+	
 }
