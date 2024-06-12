@@ -17,5 +17,7 @@ public interface WareHouseService {
 
 	ResponseEntity<ResponseStructure<WareHouseResponse>> createWarehouse(WareHouseRequest wareHouseRequest);
 
+	ResponseEntity<ResponseStructure<WareHouseResponse>> findWareHouse(int wareHouseId);
+
 	
 }
